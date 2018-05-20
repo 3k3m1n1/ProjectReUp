@@ -8,8 +8,27 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate {
+    
+    //MARK: Properties
+    
+    @IBAction func getStart(_ sender: Any) {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera;
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        picker.dismiss(animated:true, completion: nil)
+        _ = info[UIImagePickerControllerOriginalImage] as! UIImage
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
